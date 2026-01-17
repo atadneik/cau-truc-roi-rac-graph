@@ -120,24 +120,12 @@ Backend đóng vai trò là "bộ não" xử lý logic thuật toán.
     - `networkx`: Hỗ trợ mạnh mẽ các cấu trúc dữ liệu đồ thị và một số thuật toán phức tạp.
     - `flask-cors`: Xử lý vấn đề Cross-Origin Resource Sharing khi Frontend và Backend chạy khác domain.
 
-### 4.2. Hạ Tầng & Triển Khai (DevOps)
-- **Docker**:
-    - `Dockerfile`: Đóng gói môi trường Python 3.9 cho Backend.
-    - `nginx.conf`: Cấu hình Nginx làm Web Server và Reverse Proxy.
-    - `docker-compose.yml`: Định nghĩa và chạy đa dịch vụ (Backend + Frontend) chỉ với 1 lệnh.
-- **Cloud Deployment**:
-    - Triển khai thành công trên **Render.com**.
-    - Backend chạy dưới dạng Web Service (Docker).
-    - Frontend chạy dưới dạng Static Site, kết nối với Backend qua biến môi trường `API_URL`.
-
 ## 5. Thách Thức & Giải Pháp
 
 | Thách Thức | Giải Pháp |
 | :--- | :--- |
 | **Đồ thị hỗn hợp (Mixed Graph)** | Backend xử lý logic riêng cho cạnh có hướng và vô hướng. Khi xây dựng danh sách kề, cạnh vô hướng được thêm 2 chiều `u->v` và `v->u`. |
 | **Trực quan hóa (Animation)** | Backend không chỉ trả về kết quả mà trả về một mảng `steps`. Frontend sử dụng `setTimeout` hoặc `requestAnimationFrame` để "phát lại" từng bước này. |
-| **CORS Error** | Cấu hình `flask-cors` cho phép mọi origin (`*`) và cấu hình Nginx Proxy trong môi trường Docker để Frontend gọi API cùng domain. |
-| **Triển khai Cloud** | Tách biệt Frontend và Backend thành 2 service trên Render. Sử dụng biến `window.API_URL` để Frontend biết địa chỉ Backend động. |
 
 ## 6. Hướng Phát Triển
 - [ ] **Lưu lịch sử**: Cho phép Undo/Redo các thao tác vẽ.
@@ -145,4 +133,4 @@ Backend đóng vai trò là "bộ não" xử lý logic thuật toán.
 - [ ] **Hiệu năng**: Tối ưu hóa Canvas cho đồ thị cực lớn (>1000 đỉnh) sử dụng WebGL hoặc thư viện như D3.js/Vis.js (hiện tại đang tự viết engine vẽ để hiểu sâu nguyên lý).
 
 ## 7. Kết Luận
-Dự án đã hoàn thành tốt các mục tiêu đề ra, cung cấp một công cụ trực quan hóa mạnh mẽ, chính xác và dễ sử dụng. Việc áp dụng Docker và quy trình triển khai chuẩn giúp dự án dễ dàng mở rộng và bảo trì trong tương lai.
+Dự án đã hoàn thành tốt các mục tiêu đề ra, cung cấp một công cụ trực quan hóa mạnh mẽ, chính xác và dễ sử dụng. Ứng dụng hoạt động ổn định, giao diện thân thiện và hỗ trợ tốt cho việc học tập và giảng dạy các thuật toán đồ thị.
