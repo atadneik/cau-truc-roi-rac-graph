@@ -1,5 +1,5 @@
 # Ignore frontend
-frontend/
+
 
 # Python
 __pycache__/

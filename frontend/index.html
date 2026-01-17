@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find shortest path - Graphonline</title>
+    <link rel="stylesheet" href="css/style.css?v=2.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="main-container">
+        <header class="main-header">
+            <div class="header-content" style="justify-content: center;">
+                <div class="logo">
+                    <i class="fas fa-share-alt"></i> Graph
+                </div>
+            </div>
+        </header>
+
+        <div class="content-wrapper">
+            <!-- Three column layout -->
+            <div class="main-layout">
+                <!-- Left Sidebar -->
+                <div class="left-sidebar">
+                    <div class="sidebar-section">
+                        <h3>Biểu diễn:</h3>
+                        <div class="conversion-tabs">
+                            <button class="conversion-tab active" data-type="matrix">Ma trận kề</button>
+                            <button class="conversion-tab" data-type="list">Danh sách kề</button>
+                            <button class="conversion-tab" data-type="edges">Danh sách cạnh</button>
+                        </div>
+                        <div class="conversion-output" id="conversionOutput">
+                            <pre id="conversionText">Chọn loại biểu diễn...</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Center Canvas -->
+                <div class="center-canvas">
+                    <div class="canvas-wrapper">
+                        <canvas id="graphCanvas"></canvas>
+                    </div>
+                </div>
+
+                <!-- Right Sidebar -->
+                <div class="right-sidebar">
+                    <!-- Toolbar Section -->
+                    <div class="toolbar-section">
+                        <h3>Công cụ:</h3>
+                        <div class="toolbar-buttons">
+                            <div class="dropdown">
+                                <button class="btn-tool" id="graphMenuBtn"><i class="fas fa-project-diagram"></i> Đồ thị
+                                    <i class="fas fa-caret-down"></i></button>
+                                <div class="dropdown-content" id="graphDropdown">
+                                    <a href="#" id="newGraphBtn">Tạo mới</a>
+                                    <a href="#" id="saveGraphBtn">Lưu đồ thị</a>
+                                    <a href="#" id="loadGraphBtn">Mở đồ thị</a>
+                                </div>
+                            </div>
+
+                            <button class="btn-tool active" id="defaultModeBtn"><i class="fas fa-mouse-pointer"></i> Mặc
+                                định</button>
+                            <button class="btn-tool" id="addVertexBtn"><i class="fas fa-plus-circle"></i> Thêm
+                                đỉnh</button>
+                            <button class="btn-tool" id="connectVerticesBtn"><i class="fas fa-share-alt"></i> Nối
+                                đỉnh</button>
+                            <div class="dropdown">
+                                <button class="btn-tool" id="algorithmsMenuBtn"><i class="fas fa-calculator"></i> Thuật
+                                    toán <i class="fas fa-caret-down"></i></button>
+                                <div class="dropdown-content" id="algorithmsDropdown">
+                                    <a href="#" data-algo="bfs">Duyệt BFS</a>
+                                    <a href="#" data-algo="dfs">Duyệt DFS</a>
+                                    <a href="#" data-algo="dijkstra">Đường đi ngắn nhất (Dijkstra)</a>
+                                    <a href="#" data-algo="bellman-ford">Đường đi ngắn nhất (Bellman-Ford)</a>
+                                    <a href="#" data-algo="bipartite">Kiểm tra đồ thị 2 phía</a>
+                                    <a href="#" data-algo="prim">Cây khung nhỏ nhất (Prim)</a>
+                                    <a href="#" data-algo="kruskal">Cây khung nhỏ nhất (Kruskal)</a>
+                                    <a href="#" data-algo="ford-fulkerson">Luồng cực đại (Ford-Fulkerson)</a>
+                                    <a href="#" data-algo="fleury">Tìm đường đi Euler (Fleury)</a>
+                                    <a href="#" data-algo="hierholzer">Tìm chu trình Euler (Hierholzer)</a>
+                                </div>
+                            </div>
+                            <button class="btn-tool" id="removeObjectBtn"><i class="fas fa-trash"></i> Xóa đối
+                                tượng</button>
+
+                        </div>
+                    </div>
+
+                    <!-- Algorithm Result Display -->
+                    <div class="algorithm-result-box" id="infoBar">
+                        <div class="result-content" id="infoText"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hidden sections for functionality preservation -->
+            <div style="display: none;">
+                <!-- Algorithm menu items (hidden but functional) -->
+                <div id="hiddenAlgoMenu">
+                    <div class="dropdown">
+                        <button class="btn-tool" id="graphMenuBtn"><i class="fas fa-project-diagram"></i> Đồ thị <i
+                                class="fas fa-caret-down"></i></button>
+                        <div class="dropdown-content" id="graphDropdown">
+                            <a href="#" id="newGraphBtn">Tạo mới</a>
+                            <a href="#" data-save>Lưu đồ thị</a>
+                            <a href="#" data-load>Mở đồ thị</a>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn-tool" id="viewMenuBtn"><i class="fas fa-search"></i> Xem <i
+                                class="fas fa-caret-down"></i></button>
+                        <div class="dropdown-content" id="viewDropdown">
+                            <a href="#" data-zoom-in>Phóng to</a>
+                            <a href="#" data-zoom-out>Thu nhỏ</a>
+                        </div>
+                    </div>
+                    <button class="btn-tool active" id="defaultModeBtn"><i class="fas fa-mouse-pointer"></i> Mặc
+                        định</button>
+                    <button class="btn-tool" id="addVertexBtn"><i class="fas fa-plus-circle"></i> Thêm đỉnh</button>
+                    <button class="btn-tool" id="connectVerticesBtn"><i class="fas fa-share-alt"></i> Nối đỉnh</button>
+                    <div class="dropdown">
+                        <button class="btn-tool" id="algorithmsMenuBtn"><i class="fas fa-calculator"></i> Thuật toán <i
+                                class="fas fa-caret-down"></i></button>
+                        <div class="dropdown-content" id="algorithmsDropdown">
+                            <a href="#" data-algo="bfs">Duyệt BFS</a>
+                            <a href="#" data-algo="dfs">Duyệt DFS</a>
+                            <a href="#" data-algo="dijkstra">Đường đi ngắn nhất (Dijkstra)</a>
+                            <a href="#" data-algo="bellman-ford">Đường đi ngắn nhất (Bellman-Ford)</a>
+                            <a href="#" data-algo="bipartite">Kiểm tra đồ thị 2 phía</a>
+                            <a href="#" data-algo="prim">Cây khung nhỏ nhất (Prim)</a>
+                            <a href="#" data-algo="kruskal">Cây khung nhỏ nhất (Kruskal)</a>
+                            <a href="#" data-algo="ford-fulkerson">Luồng cực đại (Ford-Fulkerson)</a>
+                            <a href="#" data-algo="fleury">Tìm đường đi Euler (Fleury)</a>
+                            <a href="#" data-algo="hierholzer">Tìm chu trình Euler (Hierholzer)</a>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn-tool" id="settingsMenuBtn"><i class="fas fa-wrench"></i> Cài đặt <i
+                                class="fas fa-caret-down"></i></button>
+                        <div class="dropdown-content" id="settingsDropdown">
+                            <a href="#" data-toggle-directed>Đổi loại đồ thị (Có hướng/Vô hướng)</a>
+                            <a href="#" data-clear>Xóa toàn bộ</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vertex search (hidden but functional) -->
+                <div class="vertex-search-container">
+                    <input type="text" id="vertexSearch" placeholder="Tên đỉnh...">
+                    <button class="btn-icon"><i class="fas fa-search"></i></button>
+                </div>
+
+                <!-- Fullscreen button (hidden) -->
+                <div class="canvas-overlay-controls">
+                    <button class="btn-icon" id="fullscreenBtn"><i class="fas fa-expand"></i></button>
+                </div>
+
+            </div>
+
+            <footer class="main-footer">
+                <!-- Footer content removed as requested -->
+            </footer>
+        </div>
+    </div>
+
+    <!-- Add Edge Modal -->
+    <div id="addEdgeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title">Thêm cạnh</span>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Trọng số cạnh</label>
+                    <div class="weight-input-group">
+                        <input type="text" id="edgeWeightInput" value="has no weight">
+                        <input type="range" id="edgeWeightSlider" min="0" max="20" value="0">
+                    </div>
+                    <div class="weight-presets">
+                        <button class="btn-preset" data-value="has no weight">Không trọng số</button>
+                        <button class="btn-preset" data-value="1">1</button>
+                        <button class="btn-preset" data-value="3">3</button>
+                        <button class="btn-preset" data-value="5">5</button>
+                        <button class="btn-preset" data-value="7">7</button>
+                        <button class="btn-preset" data-value="11">11</button>
+                        <button class="btn-preset" data-value="42">42</button>
+                    </div>
+                </div>
+                <!-- 
+                <div class="form-group">
+                    <label>Văn bản trên cạnh</label>
+                    <input type="text" id="edgeLabelInput">
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="saveEdgeCheckbox"> Lưu cạnh để sử dụng lại
+                    </label>
+                </div>
+                -->
+                <div class="modal-actions">
+                    <button id="addDirectedEdgeBtn" class="btn-action">Có hướng</button>
+                    <button id="addUndirectedEdgeBtn" class="btn-action">Vô hướng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/graph.js?v=1.3"></script>
+    <script src="js/canvas.js?v=1.3"></script>
+    <script src="js/api.js?v=1.3"></script>
+    <script src="js/sidebar.js?v=1.3"></script>
+    <script src="js/ui.js?v=1.4"></script>
+    <script src="debug.js"></script>
+</body>
+
+</html>

@@ -1,6 +1,5 @@
 """
-Flask Backend cho Ứng dụng Trực quan hóa Đồ thị
-Cung cấp API endpoints cho tất cả các thuật toán đồ thị
+Backend Flask server cung cấp API cho các thuật toán đồ thị.
 """
 
 from flask import Flask, request, jsonify

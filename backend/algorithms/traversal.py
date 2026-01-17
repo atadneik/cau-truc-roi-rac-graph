@@ -1,73 +1,115 @@
 """
-THUẬT TOÁN DUYỆT ĐỒ THỊ (Graph Traversal Algorithms)
-
- MỤC ĐÍCH:
-    Duyệt tất cả các đỉnh trong đồ thị theo một thứ tự nhất định.
-
- THUẬT TOÁN:
-    - BFS (Breadth-First Search):  Duyệt theo chiều rộng - dùng Queue
-    - DFS (Depth-First Search):    Duyệt theo chiều sâu - dùng Stack
-    BFS:
-        - Tìm đường đi ngắn nhất (không có trọng số)
-        - Tìm cấp độ/level của các đỉnh
-        - Tìm tất cả đỉnh trong khoảng cách k
-    
-    DFS:
-        - Tìm chu trình
-        - Kiểm tra liên thông
-        - Topological sort
-        - Tìm thành phần liên thông
-
- INPUT FORMAT:
-    graph = {
-        'nodes': [{'id': 1}, {'id': 2}, {'id': 3}],
-        'edges': [
-            {'from': 1, 'to': 2},
-            {'from': 2, 'to': 3}
-        ],
-        'directed': False
-    }
-
- OUTPUT FORMAT:
-    {
-        'order': [1, 2, 3],         # Thứ tự duyệt các đỉnh
-        'visited_count': 3,         # Số đỉnh đã thăm
-        'steps': [...]              # Các bước để visualization
-    }
-
- LƯU Ý:
-    - BFS dùng Queue (FIFO) → duyệt từng level
-    - DFS dùng Stack (LIFO) → đi sâu trước
-    - Có 2 cách implement DFS: iterative (dùng stack) và recursive"""
-
+Các thuật toán duyệt đồ thị (BFS, DFS).
+"""
 from collections import deque, defaultdict
 
 
+def build_adjacency_list(graph):
+    """Xây dựng danh sách kề từ dữ liệu đồ thị."""
+    adj = defaultdict(list)
+
+    for edge in graph['edges']:
+        u = edge['from']
+        v = edge['to']
+
+        adj[u].append(v)
+
+        # Kiểm tra hướng của cạnh cụ thể trước, sau đó mới dùng cấu hình toàn cục
+        is_directed = edge.get('isDirected')
+        if is_directed is None:
+            is_directed = graph.get('directed', False)
+        
+        if not is_directed:
+            adj[v].append(u)
+
+    return adj
+
+
 def bfs(graph, start):
-    """
-    Duyệt đồ thị theo chiều rộng (Breadth-First Search).
-    
-    Args:
-        graph: Dict chứa đồ thị
-        start: Đỉnh bắt đầu
-    
-    Returns:
-        Dict {order: list, visited_count: int, steps: list}
-    """
-    # TODO: Implement BFS
-    pass
+    """Breadth-First Search (BFS)."""
+    adj = build_adjacency_list(graph)
+
+    visited = set()
+    queue = deque()
+    order = []
+    steps = []
+
+    queue.append(start)
+    visited.add(start)
+
+    steps.append({
+        'type': 'visit',
+        'node': start,
+        'description': f"Bắt đầu BFS từ đỉnh {start}"
+    })
+
+    while queue:
+        current = queue.popleft()
+        order.append(current)
+
+        for neighbor in adj[current]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append(neighbor)
+
+                steps.append({
+                    'type': 'visit',
+                    'node': neighbor,
+                    'from': current,
+                    'description': f"Thăm đỉnh {neighbor} từ {current}"
+                })
+
+    return {
+        'order': order,
+        'visited_count': len(visited),
+        'steps': steps
+    }
 
 
 def dfs(graph, start):
-    """
-    Duyệt đồ thị theo chiều sâu (Depth-First Search).
-    
-    Args:
-        graph: Dict chứa đồ thị
-        start: Đỉnh bắt đầu
-    
-    Returns:
-        Dict {order: list, visited_count: int, steps: list}
-    """
-    # TODO: Implement DFS
-    pass
+    """Depth-First Search (DFS)."""
+    adj = build_adjacency_list(graph)
+
+    visited = set()
+    stack = []
+    order = []
+    steps = []
+
+    stack.append((start, None)) # (node, parent)
+
+    steps.append({
+        'type': 'visit',
+        'node': start,
+        'description': f"Bắt đầu DFS từ đỉnh {start}"
+    })
+
+    while stack:
+        current, parent = stack.pop()
+
+        if current in visited:
+            continue
+
+        visited.add(current)
+        order.append(current)
+
+        if parent is not None:
+             steps.append({
+                'type': 'visit',
+                'node': current,
+                'from': parent,
+                'description': f"Thăm đỉnh {current} từ {parent}"
+            })
+
+        # Sắp xếp các đỉnh kề theo thứ tự ngược lại để đảm bảo thứ tự duyệt tự nhiên khi dùng stack
+        neighbors = adj[current]
+        neighbors.sort(reverse=True)
+
+        for neighbor in neighbors:
+            if neighbor not in visited:
+                stack.append((neighbor, current))
+
+    return {
+        'order': order,
+        'visited_count': len(visited),
+        'steps': steps
+    }
