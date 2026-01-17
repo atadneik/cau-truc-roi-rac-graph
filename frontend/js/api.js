@@ -2,8 +2,20 @@
  * Class API - Gọi các endpoint backend
  */
 class API {
-    constructor(baseURL = 'http://localhost:5000') {
-        this.baseURL = baseURL;
+    constructor(baseURL = null) {
+        // Nếu có baseURL truyền vào thì dùng
+        if (baseURL) {
+            this.baseURL = baseURL;
+        }
+        // Nếu đang chạy trên localhost (dev), mặc định port 5000
+        else if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            this.baseURL = 'http://localhost:5000';
+        }
+        // Nếu chạy trên production (Render/Netlify), giả định backend cùng domain (nếu dùng proxy)
+        // Hoặc người dùng có thể set biến global API_URL
+        else {
+            this.baseURL = window.API_URL || ''; // Empty string means relative path
+        }
     }
 
     /**
