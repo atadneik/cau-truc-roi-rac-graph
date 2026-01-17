@@ -136,6 +136,8 @@ def find_euler_path(graph, start_node_id=None):
     """Tìm đường đi Euler sử dụng thuật toán Fleury."""
 
     # 1. Map ID sang index 0..n-1
+    nodes_data = graph['nodes']
+    edges_data = graph['edges']
     node_id_to_idx = {n['id']: i for i, n in enumerate(nodes_data)}
     idx_to_node_id = {i: n['id'] for i, n in enumerate(nodes_data)}
     n = len(nodes_data)
