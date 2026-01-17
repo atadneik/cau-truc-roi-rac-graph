@@ -17,6 +17,19 @@ def index():
     return jsonify({'status': 'Backend is running', 'message': 'Use /api/ endpoints'})
 
 
+@app.errorhandler(Exception)
+def handle_exception(e):
+    """Xử lý lỗi toàn cục để trả về JSON thay vì HTML"""
+    response = jsonify({
+        "error": "Internal Server Error",
+        "message": str(e)
+    })
+    response.status_code = 500
+    # Đảm bảo CORS header luôn có ngay cả khi lỗi
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
+
 @app.route('/api/shortest-path', methods=['POST'])
 def shortest_path_api():
     """Tìm đường đi ngắn nhất"""

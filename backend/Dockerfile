@@ -14,5 +14,5 @@ COPY . .
 # Expose port 5000
 EXPOSE 5000
 
-# Chạy server Flask
-CMD ["python", "app.py"]
+# Chạy server Flask với Gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
