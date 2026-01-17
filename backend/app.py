@@ -8,7 +8,13 @@ from algorithms import shortest_path, traversal, bipartite, conversion
 from algorithms import prim, kruskal, ford_fulkerson, fleury, hierholzer
 
 app = Flask(__name__)
-CORS(app)
+# Cho phép CORS cho tất cả các domain, tất cả các route
+CORS(app, resources={r"/*": {"origins": "*"}})
+
+@app.route('/', methods=['GET'])
+def index():
+    """Route mặc định để kiểm tra server"""
+    return jsonify({'status': 'Backend is running', 'message': 'Use /api/ endpoints'})
 
 
 @app.route('/api/shortest-path', methods=['POST'])
