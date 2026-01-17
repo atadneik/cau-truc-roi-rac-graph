@@ -80,4 +80,4 @@ cautrucroirac/
 ```
 
 ## 👨‍💻 Tác Giả
-Bài tập lớn môn Cấu trúc Dữ liệu & Giải thuật.
+Bài tập lớn môn Cấu trúc Rời Rạc
