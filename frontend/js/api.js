@@ -32,7 +32,18 @@ class API {
             });
 
             if (!response.ok) {
-                throw new Error(`Lỗi HTTP! trạng thái: ${response.status}`);
+                let errorMessage = `Lỗi HTTP! trạng thái: ${response.status}`;
+                try {
+                    const errorBody = await response.json();
+                    if (errorBody.message) {
+                        errorMessage += ` - ${errorBody.message}`;
+                    } else if (errorBody.error) {
+                        errorMessage += ` - ${errorBody.error}`;
+                    }
+                } catch (e) {
+                    // Ignore JSON parse error if body is not JSON
+                }
+                throw new Error(errorMessage);
             }
 
             return await response.json();
