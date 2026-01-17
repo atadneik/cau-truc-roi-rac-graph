@@ -45,17 +45,38 @@ Dự án này là một ứng dụng web tương tác giúp trực quan hóa cá
 
 ## 🛠️ Cách Hoạt Động
 
-### Backend (Python/Flask)
-Backend đóng vai trò là bộ xử lý thuật toán.
-- **API Endpoints**: Cung cấp các RESTful API (ví dụ: `/api/shortest-path`, `/api/bfs`) nhận dữ liệu đồ thị từ frontend.
-- **Xử Lý Logic**: Các thuật toán được cài đặt độc lập trong thư mục `algorithms/`.
-- **Dữ Liệu**: Nhận input là danh sách đỉnh/cạnh và trả về kết quả chi tiết (đường đi, các bước thực hiện, màu sắc đỉnh...) để frontend hiển thị animation.
+### Chạy với Docker (Khuyên dùng)
+Cách đơn giản nhất để chạy dự án là sử dụng Docker Compose.
 
-### Frontend (HTML/CSS/JS)
+1.  **Yêu cầu**: Cài đặt Docker và Docker Compose.
+2.  **Chạy lệnh**:
+    ```bash
+    docker-compose up --build
+    ```
+3.  **Truy cập**:
+    - Frontend: http://localhost:8080
+    - Backend API: http://localhost:5000
+
+### Chạy Thủ Công
+Nếu không dùng Docker, bạn cần cài đặt môi trường Python và chạy server thủ công.
+
+#### Backend (Python/Flask)
+Backend đóng vai trò là bộ xử lý thuật toán.
+- **Cài đặt**:
+  ```bash
+  cd backend
+  pip install -r requirements.txt
+  ```
+- **Chạy**:
+  ```bash
+  python app.py
+  ```
+- **API Endpoints**: Cung cấp các RESTful API (ví dụ: `/api/shortest-path`, `/api/bfs`) nhận dữ liệu đồ thị từ frontend.
+
+#### Frontend (HTML/CSS/JS)
 Frontend đảm nhiệm việc hiển thị và tương tác người dùng.
-- **Canvas API**: Sử dụng HTML5 Canvas để vẽ các đỉnh, cạnh và hiệu ứng hoạt hình (animation) mượt mà.
-- **Quản Lý State**: Class `Graph` quản lý trạng thái logic của đồ thị, trong khi `GraphCanvas` xử lý việc vẽ.
-- **Tương Tác API**: Gửi request chứa cấu trúc đồ thị về backend và nhận kết quả để hiển thị từng bước chạy của thuật toán.
+- **Chạy**: Mở file `frontend/index.html` trực tiếp hoặc dùng Live Server.
+- **Lưu ý**: Nếu chạy thủ công, cần đảm bảo Backend đang chạy ở port 5000.
 
 ## 📦 Cấu Trúc Dự Án
 
