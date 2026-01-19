@@ -105,14 +105,6 @@ class API {
         });
     }
 
-    /**
-     * Thuật toán Prim
-     */
-    async prim(graph) {
-        return await this.call('/api/prim', {
-            graph: graph
-        });
-    }
 
     /**
      * Thuật toán Kruskal

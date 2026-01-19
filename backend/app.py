@@ -5,7 +5,7 @@ Backend Flask server cung cấp API cho các thuật toán đồ thị.
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from algorithms import shortest_path, traversal, bipartite, conversion
-from algorithms import prim, kruskal, ford_fulkerson, fleury, hierholzer
+from algorithms import kruskal, ford_fulkerson, fleury, hierholzer
 
 app = Flask(__name__)
 # Cho phép CORS cho tất cả các domain, tất cả các route
@@ -79,12 +79,6 @@ def convert_api():
     return jsonify({'result': result})
 
 
-@app.route('/api/prim', methods=['POST'])
-def prim_api():
-    """Thuật toán Prim - MST"""
-    data = request.json
-    result = prim.find_mst_prim(data['graph'])
-    return jsonify(result)
 
 
 @app.route('/api/kruskal', methods=['POST'])
@@ -130,5 +124,5 @@ def health():
 
 
 if __name__ == '__main__':
-    print("🚀 Server đang chạy tại http://localhost:5000")
+    print(" Server đang chạy tại http://localhost:5000")
     app.run(debug=True, host='0.0.0.0', port=5000)

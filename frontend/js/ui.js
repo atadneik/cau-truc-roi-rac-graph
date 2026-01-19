@@ -427,11 +427,6 @@ async function runAlgorithmStep2(algorithm, startNode, endNode) {
                 }
                 break;
 
-            case 'prim':
-                result = await api.prim(graphData);
-                if (result.steps) await canvas.animateSteps(result.steps, 500);
-                logResult('MST (Prim)', `Tổng trọng số: ${result.total_weight}`);
-                break;
 
             case 'kruskal':
                 result = await api.kruskal(graphData);
