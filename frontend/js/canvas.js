@@ -263,7 +263,7 @@ class GraphCanvas {
     async processStep(step) {
         switch (step.type || step.action) { // Xử lý cả 'type' và 'action'
             case 'visit':
-            case 'start': // Xử lý action 'start' từ Prim
+            case 'start':
                 if (step.node) this.highlightedNodes.add(step.node);
                 if (step.from && step.node) {
                     this.highlightedEdges.add(`${step.from}-${step.node}`);
