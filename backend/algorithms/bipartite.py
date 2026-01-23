@@ -6,11 +6,11 @@ from collections import deque, defaultdict
 
 def check_bipartite(graph):
     """Kiểm tra xem đồ thị có phải là hai phía không và trả về cách tô màu."""
-    # Build adjacency list (undirected)
+    # Xây dựng danh sách kề (vô hướng)
     adj = defaultdict(list)
     nodes = set()
     
-    # Get all nodes first
+    # Lấy tất cả các đỉnh trước
     for node in graph['nodes']:
         nodes.add(node['id'])
         
@@ -18,19 +18,19 @@ def check_bipartite(graph):
         u, v = edge['from'], edge['to']
         adj[u].append(v)
         adj[v].append(u)
-        # Ensure nodes in edges are in our node set (just in case)
+        # Đảm bảo các đỉnh trong cạnh có trong tập hợp đỉnh (đề phòng trường hợp thiếu)
         nodes.add(u)
         nodes.add(v)
         
-    coloring = {} # node_id -> 0 or 1
+    coloring = {} # node_id -> 0 hoặc 1
     is_bipartite = True
     
-    # Iterate through all nodes to handle disconnected components
+    # Duyệt qua tất cả các đỉnh để xử lý các thành phần liên thông rời rạc
     for start_node in nodes:
         if start_node in coloring:
             continue
             
-        # Start BFS for this component
+        # Bắt đầu BFS cho thành phần này
         queue = deque([start_node])
         coloring[start_node] = 0
         
@@ -44,10 +44,8 @@ def check_bipartite(graph):
                     queue.append(v)
                 elif coloring[v] == current_color:
                     is_bipartite = False
-                    # We can stop early or continue to color the rest for partial result
-                    # Usually stop early is fine for the boolean, but we might want full coloring attempt?
-                    # The requirement asks for coloring, let's just break this loop but we might need to be careful.
-                    # If not bipartite, the coloring is invalid anyway.
+                    # Phát hiện xung đột: hai đỉnh kề nhau có cùng màu.
+                    # Kết luận ngay đây không phải là đồ thị hai phía và dừng xử lý.
                     break
             if not is_bipartite:
                 break
@@ -55,7 +53,7 @@ def check_bipartite(graph):
         if not is_bipartite:
             break
             
-    # Group nodes by color
+    # Nhóm các đỉnh theo màu
     groups = {'group0': [], 'group1': []}
     for node, color in coloring.items():
         if color == 0:

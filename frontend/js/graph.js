@@ -46,7 +46,7 @@ class Graph {
         // Kiểm tra cạnh đã tồn tại chưa
         const existingEdge = this.edges.find(e => e.from === fromId && e.to === toId);
         if (existingEdge) {
-            // Cập nhật cạnh hiện có
+            // Update existing edge
             existingEdge.weight = weight;
             existingEdge.isDirected = isDirected;
             this.emitGraphUpdate();
@@ -203,7 +203,7 @@ class Graph {
     }
 
     /**
-     * Lấy định dạng danh sách cạnh
+     * Get edge list format
      */
     toEdgeList() {
         return {
@@ -214,7 +214,7 @@ class Graph {
     }
 
     /**
-     * Phát sự kiện cập nhật đồ thị
+     * Emit graph update event
      */
     emitGraphUpdate() {
         if (typeof window !== 'undefined') {

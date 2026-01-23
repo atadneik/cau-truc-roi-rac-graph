@@ -10,7 +10,7 @@ body {
     font-size: 14px;
     line-height: 1.42857143;
     color: #333;
-    background-color: #fff;
+    background-color: #e8e8e8;
 }
 
 a {
@@ -156,8 +156,8 @@ a:hover {
 /* Left Sidebar */
 .left-sidebar {
     background-color: #fff;
-    border: 1px solid #000;
-    border-radius: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
     padding: 15px;
     font-size: 11px;
 }
@@ -232,18 +232,18 @@ a:hover {
 }
 
 .conversion-tab.active {
-    background-color: #00d9ff;
+    background-color: #fff;
     border-bottom-color: #00d9ff;
-    color: #000;
+    color: #00d9ff;
 }
 
 .conversion-output {
     background-color: #fff;
-    border: 1px solid #000;
-    border-radius: 8px;
+    border: 2px solid #333;
+    border-radius: 4px;
     padding: 8px;
-    min-height: 300px;
-    max-height: 600px;
+    min-height: 120px;
+    max-height: 180px;
     overflow-y: auto;
     font-size: 9px;
 }
@@ -275,8 +275,8 @@ a:hover {
     width: 90%;
     max-width: 800px;
     height: 600px;
-    border: 1px solid #000;
-    border-radius: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
     background-color: #fff;
     overflow: hidden;
 }
@@ -293,8 +293,8 @@ a:hover {
     margin-top: 15px;
     width: 100%;
     background-color: #fff;
-    border: 1px solid #000;
-    border-radius: 8px;
+    border: 1px solid #333;
+    border-radius: 6px;
     overflow: hidden;
     flex: 1;
     display: flex;
@@ -320,8 +320,8 @@ a:hover {
 /* Right Sidebar */
 .right-sidebar {
     background-color: #fff;
-    border: 1px solid #000;
-    border-radius: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
     padding: 18px;
     display: flex;
     flex-direction: column;
@@ -395,8 +395,9 @@ a:hover {
 .toolbar-section {
     background-color: #fff;
     border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
-    margin-bottom: 15px;
+    padding: 12px;
+    margin: -18px -18px 15px -18px;
+    /* Extend to edges of sidebar */
 }
 
 .toolbar-section h3 {
@@ -417,16 +418,16 @@ a:hover {
     width: 100%;
     padding: 8px 10px;
     border: 1px solid #00d9ff;
-    background-color: #fff;
-    color: #333;
+    background-color: #1a1a1a;
+    color: #fff;
     border-radius: 4px;
     cursor: pointer;
     font-size: 12px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     gap: 5px;
-    text-align: center;
+    text-align: left;
 }
 
 .toolbar-buttons .btn-tool i:first-child {
@@ -464,7 +465,7 @@ a:hover {
     z-index: 1000;
     border: 1px solid #00d9ff;
     border-radius: 4px;
-    margin-right: 0;
+    margin-right: 5px;
 }
 
 .toolbar-buttons .dropdown:hover .dropdown-content {

@@ -1,9 +1,7 @@
-"""
-Các tiện ích chuyển đổi biểu diễn đồ thị.
-"""
-
 def convert_graph(graph_data, from_type, to_type):
-    """Chuyển đổi giữa các biểu diễn đồ thị: 'matrix', 'list', 'edges'."""
+    """
+    Chuyển đổi giữa các dạng biểu diễn đồ thị: 'matrix', 'list', 'edges'.
+    """
     # lay thong tin
     is_directed = graph_data.get('directed', False)
     
@@ -53,7 +51,7 @@ def convert_graph(graph_data, from_type, to_type):
             for neighbor in adj_list[u]:
                 v = neighbor['to']
                 weight = neighbor['weight']
-                matrix[node_to_idx[str(u)]][node_to_idx[str(v)]] = weight
+                matrix[node_to_idx[u]][node_to_idx[v]] = weight
                 
         return {'matrix': matrix, 'nodes': nodes, 'directed': is_directed}
 
